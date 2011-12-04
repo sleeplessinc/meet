@@ -23,9 +23,10 @@ IN THE SOFTWARE.
 var Meet = require("./meet.js").Meet
 
 function func(t) {
+	var m = this			// when called, 'this' is the Meet instance
 	setTimeout(function() {
-		console.log("done t="+t)
-		meet.done()
+		console.log(m.data.hello+" "+t)
+		m.done()
 	}, t)
 }
 
@@ -33,10 +34,9 @@ function finished() {
 	console.log("finished")
 }
 
-var meet = new Meet({})
+new Meet({hello:"world"})	// this arg is available as 'data' in the Meet instance
 	.call(func, Math.random() * 3000)
 	.call(func, Math.random() * 3000)
 	.call(func, Math.random() * 3000)
-	.done(finished)
-
+	.allDone(finished)
 

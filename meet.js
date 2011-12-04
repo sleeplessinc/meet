@@ -31,18 +31,23 @@ exports.Meet = function Meet(data) {
 		self.pending++;
 		var args = Array.prototype.slice.call(arguments);	// convert arguments to real Array
 		f = args.shift()			// remove f from front of args array
-		f.apply(self, args)
+		f.apply(self, args)			// call func; "this" will be the "Meet" object
 		return self
 	}
 
-	self.done = function(f) {
-		if(f === undefined) 
-			self.pending--		// task is done
-		else
-			self.finished = f	// call this when pending changes to 0
+	self.check = function() {
 		if(self.pending < 1)
 			self.finished.apply(this)
-		return self
+	}
+
+	self.done = function() {
+		self.pending--			// one less thing to do
+		self.check()
+	}
+
+	self.allDone = function(f) {
+		self.finished = f		// call this when all pending tasks are done
+		self.check()
 	}
 
 }
