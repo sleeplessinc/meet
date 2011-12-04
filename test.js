@@ -1,4 +1,3 @@
-
 /*
 Copyright 2011 Sleepless Software Inc. All rights reserved.
 
@@ -21,33 +20,23 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-
-var util = require("util")
-var log = console.log
-
 var Meet = require("./meet.js").Meet
 
-
-function sum(a, b) {
-	log("sum "+a+" "+b)
-	this.data.s = a + b;
-	this.done()
+function func(t) {
+	setTimeout(function() {
+		console.log("done t="+t)
+		meet.done()
+	}, t)
 }
 
-function prd(a, b) {
-	log("prd "+a+" "+b)
-	this.data.p = a * b
-	this.done()
+function finished() {
+	console.log("finished")
 }
 
-function ok() {
-	log("ok "+this.data.s+", "+this.data.p) 
-}
-
-new Meet({})
-	.call(sum, 1, 2)
-	.call(prd, 3, 4)
-	.done(ok)		// do this last
-
+var meet = new Meet({})
+	.call(func, Math.random() * 3000)
+	.call(func, Math.random() * 3000)
+	.call(func, Math.random() * 3000)
+	.done(finished)
 
 

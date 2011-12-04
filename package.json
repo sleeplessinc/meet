@@ -1,7 +1,7 @@
 {
 	"name": "meet",
 
-	"version": "1.0.0",
+	"version": "1.1.0",
 
 	"description" : "Provides a way to start multiple asynchronous tasks with a single callback when all are finished",
 
