@@ -23,7 +23,6 @@ IN THE SOFTWARE.
 
 
 var util = require("util")
-var insp = util.inspect
 var log = console.log
 
 var Meet = require("./meet.js").Meet
@@ -48,7 +47,7 @@ function ok() {
 new Meet({})
 	.call(sum, 1, 2)
 	.call(prd, 3, 4)
-	.done(ok)
+	.done(ok)		// do this last
 
 
 
