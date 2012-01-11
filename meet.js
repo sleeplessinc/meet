@@ -20,10 +20,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-exports.Meet = function Meet(fin) {
+exports.Meet = function Meet() {
 	var self = this
 
-	self.finished = fin || function() {}
+	self.finished = function() {}
 	self.pending = 0
 
 	self.call = function() {
