@@ -34,10 +34,9 @@ function finished() {
 	console.log("finished")
 }
 
-new Meet()
+new Meet(finished)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
-	.allDone(finished)
 
