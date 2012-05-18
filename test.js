@@ -30,8 +30,8 @@ function func(t) {
 	}, t)
 }
 
-function finished() {
-	console.log("finished")
+function finished(msg) {
+	console.log(msg)
 }
 
 new Meet()
@@ -39,5 +39,5 @@ new Meet()
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
-	.allDone(finished)
+	.allDone(finished, "yay")
 

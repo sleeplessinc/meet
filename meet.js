@@ -26,7 +26,7 @@ exports.Meet = function Meet() {
 	self.finished = function() {}
 	self.pending = 0
 
-	self.call = function() {
+	self.call = function(f /*, ...*/) {
 		self.pending++;
 		var args = Array.prototype.slice.call(arguments);	// convert arguments to real Array
 		f = args.shift()			// remove f from front of args array
@@ -36,7 +36,7 @@ exports.Meet = function Meet() {
 
 	self.check = function() {
 		if(self.pending < 1)
-			self.finished.apply(this)
+			self.finished.apply(this, doneArgs)
 	}
 
 	self.done = function() {
@@ -44,8 +44,10 @@ exports.Meet = function Meet() {
 		self.check()
 	}
 
-	self.allDone = function(f) {
-		self.finished = f		// call this when all pending tasks are done
+	self.allDone = function(f /*, ...*/) {
+		self.doneArgs = Array.prototype.slice.call(arguments);	// convert arguments to real Array
+		f = self.doneArgs.shift()		// remove f from front of args array
+		self.finished = f			// call this when all pending tasks are done
 		self.check()
 	}
 
