@@ -36,7 +36,7 @@ exports.Meet = function Meet() {
 
 	self.check = function() {
 		if(self.pending < 1)
-			self.finished.apply(this, doneArgs)
+			self.finished.apply(this, self.doneArgs)
 	}
 
 	self.done = function() {

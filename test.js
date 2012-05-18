@@ -39,5 +39,5 @@ new Meet()
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
-	.allDone(finished, "yay")
+	.allDone(finished, "Hasta la vista, baby.")
 
