@@ -20,37 +20,35 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-exports.Meet = function Meet() {
-	var self = this
-
+module.exports = function() {
+	var self = {}
 	self.finished = function() {}
 	self.pending = 0
-
-	self.call = function(f /*, ...*/) {
+	self.call = function(f) {
 		self.pending++;
-		var args = Array.prototype.slice.call(arguments);	// convert arguments to real Array
-		f = args.shift()			// remove f from front of args array
-		f.apply(self, args)			// call func; "this" will be the "Meet" object
-		return self
+		var args = Array.prototype.slice.call(arguments);
+		f = args.shift();
+		var o = { done: self.oneDone };
+		f.apply(o, args);
+		return self;
 	}
-
 	self.check = function() {
-		if(self.pending < 1)
-			self.finished.apply(this, self.doneArgs)
+		if(self.pending < 1) {
+			self.finished.apply(this, self.doneArgs);
+		}
 	}
-
-	self.done = function() {
-		self.pending--			// one less thing to do
-		self.check()
+	self.oneDone = function() {
+		self.pending--;
+		self.check();
 	}
-
-	self.allDone = function(f /*, ...*/) {
-		self.doneArgs = Array.prototype.slice.call(arguments);	// convert arguments to real Array
-		f = self.doneArgs.shift()		// remove f from front of args array
-		self.finished = f			// call this when all pending tasks are done
-		self.check()
+	self.done = function(f) {
+		self.doneArgs = Array.prototype.slice.call(arguments);
+		f = self.doneArgs.shift();
+		self.finished = f || function(){};
+		self.check();
+		return self;
 	}
-
+	return self;
 }
 
 if(require.main === module) {

@@ -1,5 +1,5 @@
 /*
-Copyright 2011 Sleepless Software Inc. All rights reserved.
+Copyright 2013 Sleepless Software Inc. All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to
@@ -20,10 +20,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-var Meet = require("./meet.js").Meet
+var meet = require("./meet.js")
 
 function func(t) {
-	var m = this			// when called, 'this' is the Meet instance
+	var m = this
 	setTimeout(function() {
 		console.log(t)
 		m.done()
@@ -34,10 +34,9 @@ function finished(msg) {
 	console.log(msg)
 }
 
-new Meet()
+meet()
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
 	.call(func, Math.random() * 4000)
-	.call(func, Math.random() * 4000)
-	.allDone(finished, "Hasta la vista, baby.")
+	.done(finished, "Hasta la vista, baby.")
 
