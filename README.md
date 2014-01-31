@@ -26,7 +26,7 @@ Provides a way to start multiple tasks with a single callback when all are finis
 		done()
 	})
 
-	meet.whenDone( function() {
+	meet.allDone( function() {
 		// all tasks have completed
 	})
 
@@ -48,7 +48,7 @@ Provides a way to start multiple tasks with a single callback when all are finis
 		done()
 	})
 
-	meet.whenDone( function() {
+	meet.allDone( function() {
 		// all tasks have completed
 	})
 
@@ -100,7 +100,7 @@ Provides a way to start multiple tasks with a single callback when all are finis
 
 	setTimeout(function() {
 		console.log('seems like a nice time to set the completion call-back');
-		m.whenDone(finished, "Everyone is done!")
+		m.allDone(finished, "Everyone is done!")
 	}, 4000);
 
 

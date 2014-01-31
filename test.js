@@ -42,6 +42,6 @@ function finished(msg) {
 
 setTimeout(function() {
 	console.log('seems like a nice time to set the completion call-back');
-	m.whenDone(finished, "Everyone is done!")
+	m.allDone(finished, "Everyone is done!")
 }, 4000);
 

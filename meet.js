@@ -43,7 +43,7 @@ module.exports = function() {
 		check();
 	}
 
-	self.whenDone = function(f) {
+	self.allDone = function(f) {
 		finished = Array.prototype.slice.call(arguments);
 		check();
 		return self;
