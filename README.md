@@ -11,7 +11,7 @@ Provides a way to start multiple tasks with a single callback when all are finis
 
 ## Run tasks cuncurrently
 
-	var Meet = require("./meet.js")
+	var Meet = require("meet")
 	var meet = new Meet()
 
 	meet.start( function() {
@@ -32,9 +32,6 @@ Provides a way to start multiple tasks with a single callback when all are finis
 
 
 ## Run tasks sequentially
-
-	var Meet = require("./meet.js")
-	var meet = new Meet()
 
 	meet.queue( function() {
 		var done = this
@@ -57,7 +54,7 @@ Provides a way to start multiple tasks with a single callback when all are finis
 ## Example
 
 
-	var Meet = require("./meet.js")
+	var Meet = require("meet")
 
 	var m = new Meet()
 
