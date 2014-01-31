@@ -20,18 +20,17 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-log = console.log
-
 module.exports = function() {
 
 	var self = this
 
-	var pending = 0				// # of tasks out standing
-	var finished = null			// called when # of outstanding tasks reaches 0
-	var queue = []				// ordered list of tasks to be done in sequence
+	var pending = 0			// # of outstanding tasks
+	var queue = []			// ordered list of tasks to be done in sequence
+	var finished = null	
 
 	var check = function() {
 		if(pending == 0) {
+			// all tasks finished
 			if(finished) {
 				(finished.shift()).apply(this, finished);
 			}
@@ -59,9 +58,10 @@ module.exports = function() {
 	}
 
 	var queueDone = function() {
+		queue.shift();		// remove finished task from queue
 		oneDone()
-		queue.shift();
 		if(queue.length > 0) {
+			// start next task in sequence
 			args = queue[0];
 			var f = args.shift()
 			f.apply(queueDone, args);
@@ -74,6 +74,7 @@ module.exports = function() {
 		var args = Array.prototype.slice.call(arguments);
 		queue.push(args);
 		if(queue.length == 1) {
+			// first task in queue.  go ahead and start it now
 			var f = args.shift()
 			f.apply(queueDone, args);
 		}
@@ -83,7 +84,9 @@ module.exports = function() {
 	return self;
 }
 
-if(require.main === module) {
+
+// if this module being run directly in node, run the test code
+if(require && require.main === module) {
 	require('./test.js')
 }
 
