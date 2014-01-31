@@ -1,9 +1,9 @@
 {
 	"name": "meet",
 
-	"version": "1.6.0",
+	"version": "1.7.0",
 
-	"description" : "Provides a way to start multiple asynchronous tasks with a single callback when all are finished",
+	"description" : "Provides a way to start multiple tasks with a single callback when all are finished",
 
 	"author": "Joe Hitchens <joe@sleepless.com> (sleepless.com)",
 
@@ -15,7 +15,7 @@
 	"repository": [
 		{
 			"type": "git",
-			"url": "https://sleeplessinc@github.com/sleeplessinc/meet.git"
+			"url": "http://github.com/sleeplessinc/meet"
 		}
 	],
 
