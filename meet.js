@@ -21,33 +21,44 @@ IN THE SOFTWARE.
 */
 
 module.exports = function() {
+
 	var self = {}
-	self.finished = function() {}
-	self.pending = 0
+
+	var finished = null
+	var pending = 0
+	var doneArgs = []
+
+	var check = function() {
+		if(pending < 1) {
+			if(finished) {
+				finished.apply(this, doneArgs);
+			}
+		}
+	}
+
+	var oneDone = function() {
+		pending--;
+		check();
+	}
+
+	self.done = function(f) {
+		doneArgs = Array.prototype.slice.call(arguments);
+		f = doneArgs.shift();
+		finished = f;
+		check();
+		return self;
+	}
+
 	self.call = function(f) {
-		self.pending++;
+		pending++;
 		var args = Array.prototype.slice.call(arguments);
 		f = args.shift();
-		var o = { done: self.oneDone };
+		//var o = { done: oneDone };
+		var o = oneDone;
 		f.apply(o, args);
 		return self;
 	}
-	self.check = function() {
-		if(self.pending < 1) {
-			self.finished.apply(this, self.doneArgs);
-		}
-	}
-	self.oneDone = function() {
-		self.pending--;
-		self.check();
-	}
-	self.done = function(f) {
-		self.doneArgs = Array.prototype.slice.call(arguments);
-		f = self.doneArgs.shift();
-		self.finished = f || function(){};
-		self.check();
-		return self;
-	}
+
 	return self;
 }
 

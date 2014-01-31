@@ -20,13 +20,13 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-var meet = require("./meet.js")
+var Meet = require("./meet.js")
 
 function func(t) {
-	var m = this
+	var done = this
 	setTimeout(function() {
 		console.log(t)
-		m.done()
+		done()
 	}, t)
 }
 
@@ -34,9 +34,16 @@ function finished(msg) {
 	console.log(msg)
 }
 
-meet()
-	.call(func, Math.random() * 4000)
-	.call(func, Math.random() * 4000)
-	.call(func, Math.random() * 4000)
-	.done(finished, "Hasta la vista, baby.")
+var m = new Meet()
+
+
+	m.call(func, Math.random() * 6000)
+	m.call(func, Math.random() * 6000)
+	m.call(func, Math.random() * 6000)
+
+
+setTimeout(function() {
+	console.log('times up');
+	m.done(finished, "Hasta la vista, baby.")
+}, 3*1000);
 
