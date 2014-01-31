@@ -20,18 +20,20 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
+log = console.log
+
 module.exports = function() {
 
-	var self = {}
+	var self = this
 
-	var finished = null
-	var pending = 0
-	var doneArgs = []
+	var pending = 0				// # of tasks out standing
+	var finished = null			// called when # of outstanding tasks reaches 0
+	var queue = []				// ordered list of tasks to be done in sequence
 
 	var check = function() {
-		if(pending < 1) {
+		if(pending == 0) {
 			if(finished) {
-				finished.apply(this, doneArgs);
+				(finished.shift()).apply(this, finished);
 			}
 		}
 	}
@@ -41,21 +43,40 @@ module.exports = function() {
 		check();
 	}
 
-	self.done = function(f) {
-		doneArgs = Array.prototype.slice.call(arguments);
-		f = doneArgs.shift();
-		finished = f;
+	self.whenDone = function(f) {
+		finished = Array.prototype.slice.call(arguments);
 		check();
 		return self;
 	}
 
-	self.call = function(f) {
+	// start a task now that may run concurrently with any others
+	self.start = function() {
 		pending++;
 		var args = Array.prototype.slice.call(arguments);
-		f = args.shift();
-		//var o = { done: oneDone };
-		var o = oneDone;
-		f.apply(o, args);
+		var f = args.shift()
+		f.apply(oneDone, args);
+		return self;
+	}
+
+	var queueDone = function() {
+		oneDone()
+		queue.shift();
+		if(queue.length > 0) {
+			args = queue[0];
+			var f = args.shift()
+			f.apply(queueDone, args);
+		}
+	}
+
+	// queue up a task to be done in order
+	self.queue = function() {
+		pending++;
+		var args = Array.prototype.slice.call(arguments);
+		queue.push(args);
+		if(queue.length == 1) {
+			var f = args.shift()
+			f.apply(queueDone, args);
+		}
 		return self;
 	}
 
