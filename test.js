@@ -1,8 +1,6 @@
 
 var Meet = require("./meet.js")
-
-var m = new Meet()
-
+var meet = new Meet()
 
 // These tasks are "started". They run concurrently & finish in random order
 function timeTask(t, id) {
@@ -12,11 +10,10 @@ function timeTask(t, id) {
 		done()
 	}, t)
 }
-m.start(timeTask, Math.random() * 6000, "a")
-m.start(timeTask, Math.random() * 6000, "b")
-m.start(timeTask, Math.random() * 6000, "c")
-m.start(timeTask, Math.random() * 6000, "d")
-
+meet.start(timeTask, Math.random() * 6000, "a")
+meet.start(timeTask, Math.random() * 6000, "b")
+meet.start(timeTask, Math.random() * 6000, "c")
+meet.start(timeTask, Math.random() * 6000, "d")
 
 // These tasks are "queued".  They run sequentially in the order that they were queued
 function queueTask(t, id) {
@@ -26,12 +23,10 @@ function queueTask(t, id) {
 		done()
 	}, t)
 }
-
-m.queue(queueTask, Math.random() * 2000, "A")
-m.queue(queueTask, Math.random() * 2000, "B")
-m.queue(queueTask, Math.random() * 2000, "C")
-m.queue(queueTask, Math.random() * 2000, "D")
-
+meet.queue(queueTask, Math.random() * 2000, "A")
+meet.queue(queueTask, Math.random() * 2000, "B")
+meet.queue(queueTask, Math.random() * 2000, "C")
+meet.queue(queueTask, Math.random() * 2000, "D")
 
 // Note that the entire series of sequential tasks operates like a single concurrent
 // task relative to the other concurrent tasks.
@@ -42,6 +37,6 @@ function finished(msg) {
 
 setTimeout(function() {
 	console.log('seems like a nice time to set the completion call-back');
-	m.allDone(finished, "Everyone is done!")
+	meet.allDone(finished, "Everyone is done!")
 }, 4000);
 
