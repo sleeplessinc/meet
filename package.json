@@ -1,7 +1,7 @@
 {
 	"name": "meet",
 
-	"version": "1.7.0",
+	"version": "1.8.0",
 
 	"description" : "Provides a way to start multiple tasks with a single callback when all are finished",
 

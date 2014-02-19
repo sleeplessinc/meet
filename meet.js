@@ -20,7 +20,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE. 
 */
 
-module.exports = function() {
+Meet = function() {
 
 	var self = this
 
@@ -85,8 +85,16 @@ module.exports = function() {
 }
 
 
-// if this module being run directly in node, run the test code
-if(require && require.main === module) {
-	require('./test.js')
+if((typeof process) !== 'undefined') {
+	// we're in node.js (versus browser)
+	module.exports = Meet
+
+	if(require && require.main === module) {
+		// this module is being executed directly
+		require('./test.js')
+	}
+
 }
+
+
 
