@@ -39,6 +39,8 @@ Meet = function() {
 
 	var oneDone = function() {
 		pending--;
+		if(pending < 0)
+			pending = 0;
 		check();
 	}
 
@@ -54,6 +56,13 @@ Meet = function() {
 		var args = Array.prototype.slice.call(arguments);
 		var f = args.shift()
 		f.apply(oneDone, args);
+		return self;
+	}
+
+	self.stop = function() {
+		finished = Array.prototype.slice.call(arguments);
+		queue = [];
+		pending = 0;
 		return self;
 	}
 
