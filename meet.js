@@ -55,6 +55,7 @@ Meet = function() {
 		pending++;
 		var args = Array.prototype.slice.call(arguments);
 		var f = args.shift()
+		args.push(oneDone);
 		f.apply(oneDone, args);
 		return self;
 	}
@@ -73,6 +74,7 @@ Meet = function() {
 			// start next task in sequence
 			args = queue[0];
 			var f = args.shift()
+			args.push(queueDone);
 			f.apply(queueDone, args);
 		}
 	}
@@ -85,6 +87,7 @@ Meet = function() {
 		if(queue.length == 1) {
 			// first task in queue.  go ahead and start it now
 			var f = args.shift()
+			args.push(queueDone);
 			f.apply(queueDone, args);
 		}
 		return self;
