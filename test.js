@@ -4,7 +4,6 @@ var meet = new Meet()
 
 // These tasks are "started". They run concurrently & finish in random order
 function timeTask(t, id, done) {
-	//var done = this
 	setTimeout(function() {
 		console.log("time "+id+": "+t)
 		done()
@@ -17,7 +16,6 @@ meet.start(timeTask, Math.random() * 6000, "d")
 
 // These tasks are "queued".  They run sequentially in the order that they were queued
 function queueTask(t, id, done) {
-	//var done = this
 	setTimeout(function() {
 		console.log("queue "+id+": "+t)
 		done()
